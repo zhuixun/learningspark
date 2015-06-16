@@ -1,7 +1,10 @@
 __author__ = '49236_000'
 
+import numpy
+import os
+import sys
 from pyspark import SparkContext
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as hist
 
 
 #u'1|24|M|technician|85711'
@@ -18,8 +21,8 @@ print "User: %d,genders %d,occupations: %d,ZIP codes: %d" % (num_user,num_gender
 
 
 #histogram
-ages=user_fields.map(lambda x: int(x[1])).collect()
-hist(aegs,bins=20,color='lightblue',normed=True)
-fig=matplotlib.pyplot.gcf()
-fig.set_size_inches(16,10)
+ages = user_fields.map(lambda x: int(x[1])).collect()
+hist(ages, bins=20, color='lightblue', normed=True)
+fig = matplotlib.pyplot.gcf()
+fig.set_size_inches(16, 10)
 
