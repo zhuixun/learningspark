@@ -48,6 +48,7 @@ object Chapter5 {
 
 
 
+
 //      println(rawData.first())
       sc.stop()
 

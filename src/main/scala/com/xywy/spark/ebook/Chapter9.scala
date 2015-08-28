@@ -115,4 +115,34 @@ object Chapter9{
   println(v.values.size)
   println(v.values.take(10).toSeq)
   println(v.indices.take(10).toSeq)
+
+  //IDF
+  val idf=new IDF().fit(tf)
+  val tfidf=idf.transform(tf)
+  val v2=tfidf.first().asInstanceOf[SV]
+  println(v2.values.size)
+  println(v2.values.take(10).toSeq)
+  println(v2.indices.take(10).toSeq)
+  //Analyzing the TF-IDF weightings
+  val minMaxVals=tfidf.map{
+    v=> val sv=v.asInstanceOf[SV]
+      (sv.values.min,sv.values.max)
+  }
+  val globalMinMax=minMaxVals.reduce{
+    case ((min1,max1),(min2,max2)) =>(math.min(min1,min2),math.max(max1,max2))
+  }
+  println(globalMinMax)
+
+  val common=sc.parallelize(Seq(Seq("you","do","we")))
+  val tfCommon=hashingTF.transform(common)
+  val tfidfCommon=idf.transform(tfCommon)
+  val commonVector=tfidfCommon.first().asInstanceOf[SV]
+  println(commonVector.values.toSeq)
+
+  val uncommon = sc.parallelize(Seq(Seq("telescope", "legislation",
+    "investment")))
+  val tfUncommon = hashingTF.transform(uncommon)
+  val tfidfUncommon = idf.transform(tfUncommon)
+  val uncommonVector = tfidfUncommon.first.asInstanceOf[SV]
+  println(uncommonVector.values.toSeq)
 }
